@@ -7,6 +7,9 @@ This repository contains the source code and documentation for a mobile applicat
 Features
 
 Image capture functionality for rice leaves.
+
 LCC value generation from captured images.
+
 Real-time calculation of required nitrogen fertilizer.
+
 User-friendly interface for easy navigation.
