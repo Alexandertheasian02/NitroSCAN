@@ -34,4 +34,25 @@ def user_signup(request):
                 return Response({'error': message}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({'error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    
+    # Function to handle user login
+@api_view(['POST'])
+def user_login(request):
+    if request.method == 'POST':
+        data = request.data
+        serializer = UserLoginSerializer(data=data)
+        
+        if serializer.is_valid():
+            username = serializer.validated_data['username']
+            password = serializer.validated_data['password']
+
+            user = authenticate(request, username=username, password=password)
+            if user:
+                login(request, user)
+                return Response({'message': 'Login successful'}, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Password or email was wrong. Please try again.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
