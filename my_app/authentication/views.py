@@ -1,6 +1,5 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
-from django.core.mail import send_mail
 from django.db import IntegrityError
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
