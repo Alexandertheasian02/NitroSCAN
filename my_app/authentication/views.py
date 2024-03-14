@@ -4,9 +4,9 @@ from django.db import IntegrityError
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from rest_framework.permissions import AllowAny, IsAuthenticated
 
-from .serializer import UserSignupSerializer, UserLoginSerializer
+
+from .serializer import UserSignupSerializer, UserLoginSerializer,UserLogoutSerializer
 
 
 # Function to handle user signup
@@ -55,3 +55,10 @@ def user_login(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+
+@api_view(['POST'])
+def user_logout(request):
+    # Django's logout function will automatically handle the session or token invalidation.
+    logout(request)
+    return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
