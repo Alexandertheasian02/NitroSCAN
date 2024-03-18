@@ -8,4 +8,4 @@ urlpatterns = [
     path('resetpassword/', views.user_reset_password_request, name='user_request_password'),
     path('delete/', views.user_delete, name='user_delete'),
     # Add other paths as needed for your application
-]
+] 
