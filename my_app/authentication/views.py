@@ -56,6 +56,7 @@ def user_logout(request):
     # Django's logout function will automatically handle the session or token invalidation.
     logout(request)
     return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
+
 @api_view(['POST'])
 def user_reset_password_request(request):
     if request.method == 'POST':
@@ -74,3 +75,20 @@ def user_reset_password_request(request):
             
             return Response({'message': 'Password reset successful.'}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['POST'])
+def user_delete(request):
+    if request.method == 'POST':
+        username = request.data.get('username')
+        password = request.data.get('password')
+        
+        user = authenticate(request, username=username, password=password)
+        if user is None:
+            return Response({'error': 'Invalid username or password.'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        # Delete the user account
+        user.delete()
+        
+        return Response({'message': 'Account deleted successfully.'}, status=status.HTTP_200_OK)
+
+   

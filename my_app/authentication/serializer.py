@@ -18,6 +18,9 @@ class PasswordResetSerializer(serializers.Serializer):
     username = serializers.CharField()
     new_password = serializers.CharField(min_length=10)
 
+class UserDeleteSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
 
 
     
