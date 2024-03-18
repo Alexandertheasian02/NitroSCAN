@@ -5,6 +5,6 @@ urlpatterns = [
     path('signup/', views.user_signup, name='user_signup'),
     path('login/', views.user_login, name='user_login'),
     path('logout/', views.user_logout, name='user_logout'),
-     path('verify/', views.verify_user, name='user_verify'),
+     path('resetpassword/', views.user_reset_password_request, name='user_request_password'),
     # Add other paths as needed for your application
 ]

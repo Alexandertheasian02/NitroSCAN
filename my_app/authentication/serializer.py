@@ -14,6 +14,10 @@ class UserLoginSerializer(serializers.Serializer):
 class UserLogoutSerializer(serializers.Serializer):
     username = serializers.CharField()
 
+class PasswordResetSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    new_password = serializers.CharField(min_length=10)
+
 
 
     
