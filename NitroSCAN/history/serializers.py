@@ -6,3 +6,7 @@ class UserHistorySerializer(serializers.ModelSerializer):
         model = UserHistory
         fields = '__all__'
 
+class UserFavoritesView(serializers.ModelSerializer):
+    class Meta:
+        model = UserFavoritesView
+        fields = '__all__'
