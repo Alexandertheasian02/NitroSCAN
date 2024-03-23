@@ -1,12 +1,13 @@
 # from django.shortcuts import render
 # Create your views here.
 
-from base64 import urlsafe_b64encode
+# from base64 import urlsafe_b64encode
 from rest_framework import generics, status, viewsets, response
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.urls import reverse
 from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 
 from . import serializer
 
@@ -22,7 +23,7 @@ class PasswordReset(generics.GenericAPIView):
         user = User.objects.filter(email=email).first()
 
         if user:
-            encoded_pk = urlsafe_b64encode(force_bytes(user.pk))
+            encoded_pk = urlsafe_base64_encode(force_bytes(user.pk))
             token = PasswordResetTokenGenerator().make_token(user)
 
             #localhost:8000/reset-password/<encoded_pk>/<token>
