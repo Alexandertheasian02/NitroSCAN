@@ -46,3 +46,13 @@ class PasswordReset(generics.GenericAPIView):
                 {"message":"User doesn't exists"},
                 status = status.HTTP_400_BAD_REQUEST,
             )
+        
+class ResetPassword(generics.GenericAPIView):
+
+    serializer_class = serializer.ResetPasswordSerializer
+
+    def patch(self, request, *args, **kwargs):
+
+        serializers = self.serializer_class(
+            data = request.data, context = {"kwargs":kwargs}
+        )
