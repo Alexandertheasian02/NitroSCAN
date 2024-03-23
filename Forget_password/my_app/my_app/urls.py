@@ -27,7 +27,7 @@ urlpatterns = [
     ),
     path (
         "password-reset/<str:encoded_pk>/<str:token>/",
-        #view
+        views.ResetPassword.as_view(),
         name = "reset-password",
     ),
     path('admin/', admin.site.urls),
