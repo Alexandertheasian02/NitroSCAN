@@ -17,6 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from authentication import views
+
 urlpatterns = [
+    path (
+        "password-reset/",
+        views.PasswordReset.as_view(),
+        name = "reset-password",
+    ),
+    path (
+        "password-reset/<str:encoded_pk>/<str:token>/",
+        #view
+        name = "reset-password",
+    ),
     path('admin/', admin.site.urls),
 ]
