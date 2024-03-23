@@ -56,3 +56,10 @@ class ResetPassword(generics.GenericAPIView):
         serializers = self.serializer_class(
             data = request.data, context = {"kwargs":kwargs}
         )
+
+        serializers.is_valid(raise_exception=True)
+
+        return response.Response(
+            {"message":"password reset complete"},
+            status = status.HTTP_200_OK,
+        )
