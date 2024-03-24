@@ -1,15 +1,13 @@
+from django.contrib.auth.models import User
+from rest_framework import serializers
 from rest_framework import status
 from rest_framework.decorators import api_view
 from django.db import IntegrityError
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from rest_framework.permissions import AllowAny, IsAuthenticated
 
-from .serializer import UserSignupSerializer, UserLoginSerializer
+from .serializer import UserSignupSerializer, UserLoginSerializer, UserLogoutSerializer,PasswordResetSerializer
 
-
-# Function to handle user signup
 @api_view(['POST'])
 def user_signup(request):
     if request.method == 'POST':
@@ -33,8 +31,7 @@ def user_signup(request):
                 return Response({'error': message}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({'error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-    
-    # Function to handle user login
+
 @api_view(['POST'])
 def user_login(request):
     if request.method == 'POST':
@@ -54,4 +51,44 @@ def user_login(request):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['POST'])
+def user_logout(request):
+    # Django's logout function will automatically handle the session or token invalidation.
+    logout(request)
+    return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
 
+@api_view(['POST'])
+def user_reset_password_request(request):
+    if request.method == 'POST':
+        serializer = PasswordResetSerializer(data=request.data)
+        if serializer.is_valid():
+            username = serializer.validated_data['username']
+            new_password = serializer.validated_data['new_password']
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                return Response({'error': 'No user with that username.'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            # Set the new password for the user
+            user.set_password(new_password)
+            user.save()
+            
+            return Response({'message': 'Password reset successful.'}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['POST'])
+def user_delete(request):
+    if request.method == 'POST':
+        username = request.data.get('username')
+        password = request.data.get('password')
+        
+        user = authenticate(request, username=username, password=password)
+        if user is None:
+            return Response({'error': 'Invalid username or password.'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        # Delete the user account
+        user.delete()
+        
+        return Response({'message': 'Account deleted successfully.'}, status=status.HTTP_200_OK)
+
+   

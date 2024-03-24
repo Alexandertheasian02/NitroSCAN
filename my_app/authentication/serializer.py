@@ -9,3 +9,19 @@ class UserSignupSerializer(serializers.Serializer):
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
+
+
+class UserLogoutSerializer(serializers.Serializer):
+    username = serializers.CharField()
+
+class PasswordResetSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    new_password = serializers.CharField(min_length=10)
+
+class UserDeleteSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+
+    
+    
