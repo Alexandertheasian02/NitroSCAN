@@ -4,10 +4,10 @@ NitroSCAN is a user-friendly mobile application designed to assist farmers in de
 
 ## Features
 
-- LCC (Leaf Color Chart) number detection
-- Fertilizer recommendation
+- LCC (Leaf Color Chart) Number Detection
+- Fertilizer Recommendation
 - User Sign Up/ Sign In
-- User account deletion
+- User Account Deletion
 
 ## Tech Stack
 
